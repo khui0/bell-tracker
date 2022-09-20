@@ -2,7 +2,8 @@ var schedule;
 var from = [];
 var to = [];
 
-const text = document.querySelector("h1");
+const main = document.querySelector("h1");
+const secondary = document.querySelector("h2");
 
 fetch("bell-schedule.json").then(res => {
     res.json().then(json => {
@@ -16,32 +17,44 @@ fetch("bell-schedule.json").then(res => {
 
 setInterval(() => {
     if (schedule) {
-        text.textContent = getPeriod();
+        main.textContent = getStatus()[0];
+        secondary.textContent = getStatus()[1];
     }
 }, 500);
 
-function getPeriod() {
+function getStatus() {
     // let now = timeToMs("08:38");
     let now = new Date();
     for (let i = 0; i < schedule.length; i++) {
         if (i == 0 && now < from[i]) {
-            return "before school";
+            return ["before school", ""];
         }
         else if (i == schedule.length - 1 && now >= to[i]) {
-            return "after school";
+            return ["after school", ""];
         }
         if (now >= from[i] && now < to[i]) {
-            return `it's currently period ${i + 1}`;
+            return [`it's currently period ${i + 1}`, `${msToMinutes(to[i] - now)} left`];
         }
         if (now >= to[i - 1] && now < from[i]) {
-            return `between periods ${i} and ${i + 1}`;
+            return [`between periods ${i} and ${i + 1}`, `next period starts in ${msToMinutes(from[i] - now)}`];
         }
     }
 }
 
 // converts hh:mm string to time in ms
-function timeToMs(string) {
+function timeToMs(time) {
     let now = new Date();
-    let array = string.split(":");
+    let array = time.split(":");
     return new Date(now.getFullYear(), now.getMonth(), now.getDate(), array[0], array[1]).getTime();
+}
+
+// converts ms to string in minutes
+function msToMinutes(ms) {
+    let value = Math.ceil(ms / 60000);
+    if (value == 1) {
+        return `${value} minute`;
+    }
+    else {
+        return `${value} minutes`;
+    }
 }
