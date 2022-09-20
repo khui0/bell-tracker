@@ -1,0 +1,44 @@
+:root {
+    --text-color: #1a1a1a;
+    --background-color: #ffffff;
+}
+
+html,
+body {
+    overflow: hidden;
+    height: 100%;
+}
+
+html {
+    font: 16px "Poppins", sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 20px;
+    color: var(--text-color);
+    background-color: var(--background-color);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin: 0;
+}
+
+h1 {
+    font-size: 40px;
+}
