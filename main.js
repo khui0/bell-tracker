@@ -5,6 +5,8 @@ var to = [];
 const main = document.querySelector("h1");
 const secondary = document.querySelector("h2");
 
+document.body.className = localStorage.getItem("theme") || "";
+
 fetch("bell-schedule.json").then(res => {
     res.json().then(json => {
         schedule = json;
@@ -58,3 +60,9 @@ function msToMinutes(ms) {
         return `${value} minutes`;
     }
 }
+
+document.querySelector("[data-toggle]").addEventListener("click", e => {
+    let value = document.body.className ? "" : e.target.getAttribute("data-toggle");
+    document.body.className = value;
+    localStorage.setItem("theme", value);
+});

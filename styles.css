@@ -1,6 +1,7 @@
 :root {
     --text-color: #1a1a1a;
     --background-color: #ffffff;
+    --surface-color: #e9e9e9;
 }
 
 html,
@@ -27,6 +28,7 @@ body {
     padding: 20px;
     color: var(--text-color);
     background-color: var(--background-color);
+    transition: color 250ms ease-in-out, background-color 250ms ease-in-out;
 }
 
 h1,
@@ -42,4 +44,39 @@ p {
 
 h1 {
     font-size: 40px;
+}
+
+button {
+    height: 2.5em;
+    margin: 0;
+    padding: 0 1em;
+    border: none;
+    border-radius: 8px;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    font: inherit;
+}
+
+[data-toggle] {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: 10px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+@media (hover: hover) {
+    button:hover {
+        background-color: var(--surface-color);
+    }
+}
+
+/* Themes */
+
+.theme-dark {
+    --text-color: #ffffff;
+    --background-color: #1a1a1a;
+    --surface-color: #292929;
 }
