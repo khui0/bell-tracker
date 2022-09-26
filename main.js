@@ -2,8 +2,8 @@ var schedule;
 var from = [];
 var to = [];
 
-const main = document.querySelector("h1");
-const secondary = document.querySelector("h2");
+const primary = document.getElementById("primary");
+const secondary = document.getElementById("secondary");
 
 document.body.className = localStorage.getItem("theme") || "";
 
@@ -19,7 +19,7 @@ fetch("bell-schedule.json").then(res => {
 
 setInterval(() => {
     if (schedule) {
-        main.textContent = getStatus()[0];
+        primary.textContent = getStatus()[0];
         secondary.textContent = getStatus()[1];
     }
 }, 500);
