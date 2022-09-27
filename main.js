@@ -5,7 +5,7 @@ var to = [];
 const primary = document.getElementById("primary");
 const secondary = document.getElementById("secondary");
 
-document.body.className = localStorage.getItem("theme2") || "";
+document.body.className = localStorage.getItem("bell-theme") || "";
 
 fetch("bell-schedule.json").then(res => {
     res.json().then(json => {
@@ -64,5 +64,5 @@ function msToMinutes(ms) {
 document.querySelector("[data-toggle]").addEventListener("click", e => {
     let value = document.body.className ? "" : e.target.getAttribute("data-toggle");
     document.body.className = value;
-    localStorage.setItem("theme2", value);
+    localStorage.setItem("bell-theme", value);
 });
