@@ -1,8 +1,8 @@
 :root {
+    color-scheme: light;
     --text-color: #1a1a1a;
     --background-color: #ffffff;
-    --surface-color: #e9e9e9;
-	--accent-color: #059fff;
+    --hover-color: #ececec;
 }
 
 html,
@@ -30,12 +30,6 @@ body {
     color: var(--text-color);
     background-color: var(--background-color);
     transition: color 250ms ease-in-out, background-color 250ms ease-in-out;
-}
-
-:focus {
-	outline: none;
-	box-shadow: 0 0 0 2px var(--accent-color);
-    transition: 100ms ease-in-out;
 }
 
 h1,
@@ -72,23 +66,26 @@ button {
     position: absolute;
     right: 0;
     bottom: 0;
+    width: 3em;
+    height: 3em;
     margin: 10px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
+    padding: 0;
+    line-height: 1em;
 }
 
 @media (hover: hover) {
     button:hover {
-        background-color: var(--surface-color);
+        background-color: var(--hover-color);
     }
 }
 
-/* Themes */
+span.material-symbols-outlined {
+    pointer-events: none;
+}
 
 .theme-dark {
+    color-scheme: dark;
     --text-color: #ffffff;
-    --background-color: #1a1a1a;
-    --surface-color: #292929;
-	--accent-color: #059fff;
+    --background-color: #1f1f1f;
+    --hover-color: #292929;
 }

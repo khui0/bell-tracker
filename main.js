@@ -65,4 +65,13 @@ document.querySelector("[data-toggle]").addEventListener("click", e => {
     let value = document.body.className ? "" : e.target.getAttribute("data-toggle");
     document.body.className = value;
     localStorage.setItem("bell-theme", value);
+
+    let icon = value ? "dark_mode" : "light_mode";
+    e.target.querySelector("span").innerHTML = icon;
+});
+
+document.addEventListener("keydown", e => {
+    if (e.key == "t") {
+        document.querySelector("[data-toggle]").click();
+    }
 });
