@@ -5,7 +5,7 @@ var to = [];
 const primary = document.getElementById("primary");
 const secondary = document.getElementById("secondary");
 
-document.body.className = localStorage.getItem("bell-theme") || "";
+setTheme(localStorage.getItem("bell-theme") || "");
 
 fetch("bell-schedule.json").then(res => {
     res.json().then(json => {
@@ -63,11 +63,7 @@ function msToMinutes(ms) {
 
 document.querySelector("[data-toggle]").addEventListener("click", e => {
     let value = document.body.className ? "" : e.target.getAttribute("data-toggle");
-    document.body.className = value;
-    localStorage.setItem("bell-theme", value);
-
-    let icon = value ? "dark_mode" : "light_mode";
-    e.target.querySelector("span").innerHTML = icon;
+    setTheme(value);
 });
 
 document.addEventListener("keydown", e => {
@@ -75,3 +71,11 @@ document.addEventListener("keydown", e => {
         document.querySelector("[data-toggle]").click();
     }
 });
+
+function setTheme(value) {
+    document.body.className = value;
+    localStorage.setItem("bell-theme", value);
+
+    let icon = value ? "dark_mode" : "light_mode";
+    document.querySelector("[data-toggle]>span").innerHTML = icon;
+}
