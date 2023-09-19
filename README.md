@@ -1,3 +1,3 @@
 # Bell Tracker
  
-Uses [VSCHSD](https://vschsd.org/)'s bell schedule
+[VSCHSD](https://vschsd.org/)
