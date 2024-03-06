@@ -50,8 +50,8 @@
         remaining: interval.to - date,
         total: interval.to - interval.from,
         text:
-          interval.alias ||
-          `Period ${index - schedule.startIndex + 1}` + " ends in",
+          (interval.alias || `Period ${index - schedule.startIndex + 1}`) +
+          " ends in",
       };
     } else {
       if (date < SCHOOL_START) {
@@ -59,7 +59,7 @@
         return {
           remaining: SCHOOL_START - date,
           total: timeToMs("24:00") - SCHOOL_END + SCHOOL_START_OFFSET,
-          text: "Before School\nStarts in",
+          text: "Good morning,\nSchool starts in",
         };
       } else if (date >= SCHOOL_END) {
         // After school
@@ -67,7 +67,7 @@
         return {
           remaining: remainingToday + SCHOOL_START_OFFSET,
           total: timeToMs("24:00") - SCHOOL_END + SCHOOL_START_OFFSET,
-          text: "After School\nSchool starts in",
+          text: "Good afternoon,\nSchool starts in",
         };
       } else {
         // Between periods
