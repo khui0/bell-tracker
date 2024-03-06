@@ -1,6 +1,135 @@
 <script>
+  import Countdown from "./lib/Countdown.svelte";
+
+  import schedule from "./schedule.json";
+
+  const intervals = schedule.intervals.map((interval) => {
+    return {
+      alias: interval.alias,
+      from: timeToMs(interval.from),
+      to: timeToMs(interval.to),
+    };
+  });
+
+  const SCHOOL_START = intervals[0].from;
+  const SCHOOL_START_OFFSET = SCHOOL_START - timeToMs("00:00");
+  const SCHOOL_END = intervals[intervals.length - 1].to;
+
+  let text = "";
+  let hours = 0;
+  let minutes = 0;
+  let seconds = 0;
+  let progressed = 0;
+  let total = 0;
+
+  // Returns zero-indexed period
+  function currentInterval(date = Date.now()) {
+    const index = intervals.findIndex((interval) => {
+      return date >= interval.from && date < interval.to;
+    });
+    return index;
+  }
+
+  function currentStatus(date = Date.now()) {
+    const index = currentInterval(date);
+    if (index !== -1) {
+      // During period
+      const interval = intervals[index];
+      return {
+        remaining: interval.to - date,
+        total: interval.to - interval.from,
+        text:
+          interval.alias ||
+          `Period ${index - schedule.startIndex + 1}` + " ends in",
+      };
+    } else {
+      if (date < SCHOOL_START) {
+        // Before school
+        return {
+          remaining: SCHOOL_START - date,
+          total: SCHOOL_START_OFFSET,
+          text: "Before School, School is in",
+        };
+      } else if (date >= SCHOOL_END) {
+        // After school
+        const remainingToday = timeToMs("24:00") - date;
+        return {
+          remaining: remainingToday + SCHOOL_START_OFFSET,
+          total: timeToMs("24:00") - SCHOOL_END + SCHOOL_START_OFFSET,
+          text: "After School, School is in",
+        };
+      } else {
+        // Between periods
+        // Index of upcoming period
+        const index =
+          intervals.findIndex((interval, i) => {
+            return date >= intervals[i].to && date < intervals[i + 1].from;
+          }) + 1;
+        const interval = intervals[index];
+        return {
+          remaining: interval.from - date,
+          total: interval.from - intervals[index - 1].to,
+          text:
+            interval.alias ||
+            `Period ${index - schedule.startIndex + 1} starts in`,
+        };
+      }
+    }
+  }
+
+  // Converts hh:mm to milliseconds
+  function timeToMs(time) {
+    const now = new Date();
+    const hours = time.split(":")[0];
+    const minutes = time.split(":")[1];
+    return new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate(),
+      hours,
+      minutes,
+    ).getTime();
+  }
+
+  // Converts milliseconds to time units (hours, minutes, seconds)
+  function msToUnits(ms) {
+    const seconds = Math.floor(Math.abs(ms / 1000));
+    const minutes = Math.floor(Math.abs(seconds / 60));
+    const hours = Math.floor(Math.abs(minutes / 60));
+    return {
+      hours: hours,
+      minutes: minutes % 60,
+      seconds: seconds % 60,
+    };
+  }
+
+  function update() {
+    const status = currentStatus();
+    text = status.text;
+
+    const remaining = msToUnits(status.remaining);
+    hours = remaining.hours;
+    minutes = remaining.minutes;
+    seconds = remaining.seconds;
+
+    progressed = status.total - status.remaining;
+    total = status.total;
+
+    window.requestAnimationFrame(update);
+  }
+  window.requestAnimationFrame(update);
 </script>
 
-<main class="bg-slate-800">
-  <h1>Vite + Svelte</h1>
+<main
+  class="h-full flex flex-col gap-2 items-center justify-center text-center"
+>
+  <h1 class="font-bold text-3xl">{text}</h1>
+  <Countdown {hours} {minutes} {seconds}></Countdown>
+  <progress class="progress w-80 m-4" value={progressed} max={total}></progress>
 </main>
+
+<style>
+  main {
+    font-family: "Figtree", sans-serif;
+  }
+</style>
