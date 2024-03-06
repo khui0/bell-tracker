@@ -3,17 +3,12 @@
 
   import schedule from "./schedule.json";
 
-  const intervals = schedule.intervals.map((interval) => {
-    return {
-      alias: interval.alias,
-      from: timeToMs(interval.from),
-      to: timeToMs(interval.to),
-    };
-  });
+  let intervals = calculateIntervals();
+  let intervalsExpiry = timeToMs("24:00");
 
-  const SCHOOL_START = intervals[0].from;
-  const SCHOOL_START_OFFSET = SCHOOL_START - timeToMs("00:00");
-  const SCHOOL_END = intervals[intervals.length - 1].to;
+  $: SCHOOL_START = intervals[0].from;
+  $: SCHOOL_START_OFFSET = SCHOOL_START - timeToMs("00:00");
+  $: SCHOOL_END = intervals[intervals.length - 1].to;
 
   let text = "";
   let hours = 0;
@@ -21,6 +16,17 @@
   let seconds = 0;
   let progressed = 0;
   let total = 0;
+
+  // Applies timeToMs on the schedule
+  function calculateIntervals() {
+    return schedule.intervals.map((interval) => {
+      return {
+        alias: interval.alias,
+        from: timeToMs(interval.from),
+        to: timeToMs(interval.to),
+      };
+    });
+  }
 
   // Returns zero-indexed period
   function currentInterval(date = Date.now()) {
@@ -31,6 +37,11 @@
   }
 
   function currentStatus(date = Date.now()) {
+    // Recalculate intervals if the day has passed
+    if (date >= intervalsExpiry) {
+      intervals = calculateIntervals();
+      intervalsExpiry = timeToMs("24:00");
+    }
     const index = currentInterval(date);
     if (index !== -1) {
       // During period
@@ -47,7 +58,7 @@
         // Before school
         return {
           remaining: SCHOOL_START - date,
-          total: SCHOOL_START_OFFSET,
+          total: timeToMs("24:00") - SCHOOL_END + SCHOOL_START_OFFSET,
           text: "Before School\nStarts in",
         };
       } else if (date >= SCHOOL_END) {
