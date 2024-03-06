@@ -48,7 +48,7 @@
         return {
           remaining: SCHOOL_START - date,
           total: SCHOOL_START_OFFSET,
-          text: "Before School, School is in",
+          text: "Before School\nStarts in",
         };
       } else if (date >= SCHOOL_END) {
         // After school
@@ -56,7 +56,7 @@
         return {
           remaining: remainingToday + SCHOOL_START_OFFSET,
           total: timeToMs("24:00") - SCHOOL_END + SCHOOL_START_OFFSET,
-          text: "After School, School is in",
+          text: "After School\nSchool starts in",
         };
       } else {
         // Between periods
@@ -123,7 +123,7 @@
 <main
   class="h-full flex flex-col gap-2 items-center justify-center text-center"
 >
-  <h1 class="font-bold text-3xl">{text}</h1>
+  <h1 class="font-bold text-3xl text-wrap whitespace-pre">{text}</h1>
   <Countdown {hours} {minutes} {seconds}></Countdown>
   <progress class="progress w-80 m-4" value={progressed} max={total}></progress>
 </main>

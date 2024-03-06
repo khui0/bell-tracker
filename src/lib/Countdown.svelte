@@ -6,7 +6,7 @@
   import pluralize from "pluralize";
 </script>
 
-<div class="flex gap-5 text-6xl">
+<div class="flex gap-5 text-3xl sm:text-6xl">
   {#if hours > 0}
     <div>
       <span class="countdown font-mono">
