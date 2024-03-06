@@ -136,7 +136,10 @@
 >
   <h1 class="font-bold text-3xl text-wrap whitespace-pre">{text}</h1>
   <Countdown {hours} {minutes} {seconds}></Countdown>
-  <progress class="progress max-w-80 m-4" value={progressed} max={total}
+  <progress
+    class="progress max-w-80 m-4 shrink-0"
+    value={progressed}
+    max={total}
   ></progress>
 </main>
 
