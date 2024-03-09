@@ -6,29 +6,23 @@
   import pluralize from "pluralize";
 </script>
 
-<div class="flex gap-5 text-3xl sm:text-6xl">
+<p class="text-3xl sm:text-6xl">
   {#if hours > 0}
-    <div>
-      <span class="countdown font-mono">
-        <span style="--value:{hours};"></span>
-      </span>
-      {pluralize("hour", hours, false)}
-    </div>
+    <span class="countdown font-mono">
+      <span style="--value:{hours};"></span>
+    </span>
+    {pluralize("hour", hours, false)}
   {/if}
   {#if minutes > 0}
-    <div>
-      <span class="countdown font-mono">
-        <span style="--value:{minutes};"></span>
-      </span>
-      {pluralize("minute", minutes, false)}
-    </div>
+    <span class="countdown font-mono">
+      <span style="--value:{minutes};"></span>
+    </span>
+    {pluralize("minute", minutes, false)}
   {/if}
-  {#if hours == 0 && minutes == 0}
-    <div>
-      <span class="countdown font-mono">
-        <span style="--value:{seconds};"></span>
-      </span>
-      {pluralize("second", seconds, false)}
-    </div>
+  {#if hours == 0}
+    <span class="countdown font-mono">
+      <span style="--value:{seconds};"></span>
+    </span>
+    {pluralize("second", seconds, false)}
   {/if}
-</div>
+</p>

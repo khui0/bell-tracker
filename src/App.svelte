@@ -119,9 +119,19 @@
     text = status.text;
 
     const remaining = msToUnits(status.remaining);
+    // Not very elegant
+    const remainingRounded = msToUnits(
+      Math.ceil(status.remaining / 60000) * 60000,
+    );
     hours = remaining.hours;
     minutes = remaining.minutes;
     seconds = remaining.seconds;
+
+    // Round up if seconds aren't being shown
+    if (hours > 0) {
+      hours = remainingRounded.hours;
+      minutes = remainingRounded.minutes;
+    }
 
     progressed = status.total - status.remaining;
     total = status.total;
