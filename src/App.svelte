@@ -142,7 +142,7 @@
 </script>
 
 <main class="h-full flex flex-col gap-2 items-center justify-center text-center p-4">
-  <h1 class="font-bold text-3xl text-wrap whitespace-pre">{text}</h1>
+  <h1 class="text-3xl text-wrap whitespace-pre">{text}</h1>
   <Countdown {hours} {minutes} {seconds}></Countdown>
   <progress class="progress max-w-80 m-4 shrink-0" value={progressed} max={total}></progress>
   <div
