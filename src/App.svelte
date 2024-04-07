@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
   import Countdown from "./lib/Countdown.svelte";
   import Toggle from "./lib/Toggle.svelte";
 
@@ -28,10 +28,10 @@
 
   // Applies timeToMs on the schedule
   function calculateIntervals() {
-    console.log(schedule);
     const input = useDelayedSchedule ? delayed : schedule;
     return input.intervals.map((interval) => {
       return {
+        // @ts-ignore
         alias: interval.alias,
         from: timeToMs(interval.from),
         to: timeToMs(interval.to),
