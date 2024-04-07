@@ -98,7 +98,7 @@
       now.getMonth(),
       now.getDate(),
       hours,
-      minutes,
+      minutes
     ).getTime();
   }
 
@@ -121,7 +121,7 @@
     const remaining = msToUnits(status.remaining);
     // Not very elegant
     const remainingRounded = msToUnits(
-      Math.ceil(status.remaining / 60000) * 60000,
+      Math.ceil(status.remaining / 60000) * 60000
     );
     hours = remaining.hours;
     minutes = remaining.minutes;
