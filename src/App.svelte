@@ -2,6 +2,7 @@
   import Countdown from "./lib/Countdown.svelte";
 
   import schedule from "./schedule.json";
+  import delayed from "./delayed.json";
 
   let intervals = calculateIntervals();
   let intervalsExpiry = timeToMs("24:00");
@@ -49,9 +50,7 @@
       return {
         remaining: interval.to - date,
         total: interval.to - interval.from,
-        text:
-          (interval.alias || `Period ${index - schedule.startIndex + 1}`) +
-          " ends in",
+        text: (interval.alias || `Period ${index - schedule.startIndex + 1}`) + " ends in",
       };
     } else {
       if (date < SCHOOL_START) {
@@ -80,9 +79,7 @@
         return {
           remaining: interval.from - date,
           total: interval.from - intervals[index - 1].to,
-          text:
-            interval.alias ||
-            `Period ${index - schedule.startIndex + 1} starts in`,
+          text: interval.alias || `Period ${index - schedule.startIndex + 1} starts in`,
         };
       }
     }
@@ -93,13 +90,7 @@
     const now = new Date();
     const hours = time.split(":")[0];
     const minutes = time.split(":")[1];
-    return new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate(),
-      hours,
-      minutes
-    ).getTime();
+    return new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes).getTime();
   }
 
   // Converts milliseconds to time units (hours, minutes, seconds)
@@ -120,9 +111,7 @@
 
     const remaining = msToUnits(status.remaining);
     // Not very elegant
-    const remainingRounded = msToUnits(
-      Math.ceil(status.remaining / 60000) * 60000
-    );
+    const remainingRounded = msToUnits(Math.ceil(status.remaining / 60000) * 60000);
     hours = remaining.hours;
     minutes = remaining.minutes;
     seconds = remaining.seconds;
@@ -141,16 +130,10 @@
   window.requestAnimationFrame(update);
 </script>
 
-<main
-  class="h-full flex flex-col gap-2 items-center justify-center text-center p-4"
->
+<main class="h-full flex flex-col gap-2 items-center justify-center text-center p-4">
   <h1 class="font-bold text-3xl text-wrap whitespace-pre">{text}</h1>
   <Countdown {hours} {minutes} {seconds}></Countdown>
-  <progress
-    class="progress max-w-80 m-4 shrink-0"
-    value={progressed}
-    max={total}
-  ></progress>
+  <progress class="progress max-w-80 m-4 shrink-0" value={progressed} max={total}></progress>
 </main>
 
 <style>
