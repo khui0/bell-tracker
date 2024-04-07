@@ -6,6 +6,7 @@
   import delayed from "./delayed.json";
 
   let useDelayedSchedule = false;
+  let useDarkTheme = true;
 
   let intervals = calculateIntervals();
   let intervalsExpiry = timeToMs("24:00");
@@ -144,8 +145,13 @@
   <h1 class="font-bold text-3xl text-wrap whitespace-pre">{text}</h1>
   <Countdown {hours} {minutes} {seconds}></Countdown>
   <progress class="progress max-w-80 m-4 shrink-0" value={progressed} max={total}></progress>
-  <div class="absolute right-0 bottom-0 m-2 flex flex-col gap-2">
-    <Toggle id="use-delayed" bind:checked={useDelayedSchedule}>Delayed</Toggle>
+  <div
+    class="absolute right-0 bottom-0 m-2 flex flex-col opacity-25 hover:opacity-100 transition-opacity"
+  >
+    <Toggle id="bt-dark-theme" classes="theme-controller" value="dark" bind:checked={useDarkTheme}
+      >Dark Mode</Toggle
+    >
+    <Toggle id="bt-use-delayed" bind:checked={useDelayedSchedule}>Delayed</Toggle>
   </div>
 </main>
 

@@ -2,6 +2,9 @@
   export let id;
   export let checked;
 
+  export let classes = "";
+  export let value = "";
+
   checked = get();
 
   $: checked,
@@ -14,9 +17,7 @@
   }
 </script>
 
-<div class="form-control">
-  <label class="label cursor-pointer gap-2">
-    <span class="label-text"><slot /></span>
-    <input type="checkbox" class="toggle" bind:checked />
-  </label>
-</div>
+<label class="label cursor-pointer gap-2">
+  <span class="label-text"><slot /></span>
+  <input type="checkbox" {value} class="toggle {classes}" bind:checked />
+</label>
