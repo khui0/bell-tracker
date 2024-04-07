@@ -1,8 +1,11 @@
-<script>
+<script lang="ts">
   import Countdown from "./lib/Countdown.svelte";
+  import Toggle from "./lib/Toggle.svelte";
 
   import schedule from "./schedule.json";
   import delayed from "./delayed.json";
+
+  let useDelayedSchedule = false;
 
   let intervals = calculateIntervals();
   let intervalsExpiry = timeToMs("24:00");
@@ -18,9 +21,16 @@
   let progressed = 0;
   let total = 0;
 
+  $: useDelayedSchedule,
+    (() => {
+      intervals = calculateIntervals();
+    })();
+
   // Applies timeToMs on the schedule
   function calculateIntervals() {
-    return schedule.intervals.map((interval) => {
+    console.log(schedule);
+    const input = useDelayedSchedule ? delayed : schedule;
+    return input.intervals.map((interval) => {
       return {
         alias: interval.alias,
         from: timeToMs(interval.from),
@@ -134,6 +144,9 @@
   <h1 class="font-bold text-3xl text-wrap whitespace-pre">{text}</h1>
   <Countdown {hours} {minutes} {seconds}></Countdown>
   <progress class="progress max-w-80 m-4 shrink-0" value={progressed} max={total}></progress>
+  <div class="absolute right-0 bottom-0 m-2 flex flex-col gap-2">
+    <Toggle id="use-delayed" bind:checked={useDelayedSchedule}>Delayed</Toggle>
+  </div>
 </main>
 
 <style>
