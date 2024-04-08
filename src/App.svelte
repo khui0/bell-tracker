@@ -74,10 +74,11 @@
       } else if (date >= SCHOOL_END) {
         // After school
         const remainingToday = timeToMs("24:00") - date;
+        const timeInterval = date < timeToMs("18:00") ? "afternoon" : "evening";
         return {
           remaining: remainingToday + SCHOOL_START_OFFSET,
           total: timeToMs("24:00") - SCHOOL_END + SCHOOL_START_OFFSET,
-          text: "Good afternoon,\nSchool starts in",
+          text: `Good ${timeInterval},\nSchool starts in`,
         };
       } else {
         // Between periods
