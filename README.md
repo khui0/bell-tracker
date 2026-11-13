@@ -1,3 +1,3 @@
 # Bell Tracker
- 
-[VSCHSD](https://vschsd.org/)
+
+Live monitor of [Valley Stream Central High School District](https://vschsd.org/)'s daily bell schedule
